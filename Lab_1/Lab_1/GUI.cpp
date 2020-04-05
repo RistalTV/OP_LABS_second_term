@@ -1,8 +1,13 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
 #include "GUI.h"
 #include <windows.h>
 #include <conio.h>
 #include <clocale>
+
+#pragma warning(disable : 4996)
+
 
 using namespace std;
 
@@ -73,8 +78,7 @@ void RIGTH(void)
 
 void GUI::Manager_key(void)
 {
-    int key;
-    while (key != 27)
+    while (int key= 0 != 27)
     {
         key = getch();
         switch (key)
@@ -154,35 +158,34 @@ void GUI::Give_Money()
 
 void GUI::Print_Menu(int lvl)
 {
-    switch(lvl)
-        case load: 
+    switch (lvl)
+    {
+        case load:
             {
                 Start_Logo();
                 Give_Money();
-                Print_Menu(1);
-                
+                GUI::Print_Menu(1);
+
             }
         case users_selection_menu:
             {
-                
+
                 break;
             }
         case user_selection_category_menu:
             {
-                break;
-            }
-        case user_selection_category_menu:
-            {
-                break;
-            }
+        break;
+    }
         case user_selection_product_menu:
             {
-                break;
-            }
+        break;
+    }
         case admin_selection_category_menu:
-            {   
-                break;
-            }
+            {
+        break;
+    }
+
+    }
 };
 
 
