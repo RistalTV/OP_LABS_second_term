@@ -263,11 +263,11 @@ Products Products::Purse(string line)
 	int i = 0;
 	unsigned int number_of_delimiters = 0;
 	Products p;
-	char cat;
+	string cat;
 	string name;
 	string low_cost;
 	string higt_cost;
-	bool recording_started = false;
+
 	for (char val : line)
 	{
 		switch (i)
@@ -336,11 +336,11 @@ Products Products::Purse(string line)
 		"МакЗавтрак",           //7
 		"Другие продукты"		//8
 	};
-
-	p.IsetCATEGORY(categ[TranslateCharToInt(cat)]);
+	i = TranslateStrToInt(cat);
+	p.IsetCATEGORY(categ.at(((i>8)||(i < 0)) ? 0 : i));
 	p.IsetNAME(name);
 	p.IsetLOW_COST(TranslateStrToInt(low_cost));
 	p.IsetHIGT_COST(TranslateStrToInt(higt_cost));
-	p.IsetINT_CATEG(TranslateCharToInt(cat));
+	p.IsetINT_CATEG(TranslateStrToInt(cat));
 	return p;
 }
