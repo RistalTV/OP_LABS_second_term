@@ -58,6 +58,12 @@ void Products::IsetINT_CATEG(int int_categ)
 		_int_categ = int_categ;
 }
 
+void Products::IsetNUMBER(int number)
+{
+	if (number > 0)
+		_number = number;
+}
+
 string Products::IgetNAME()
 {
 	return _name;
@@ -81,6 +87,11 @@ int Products::IgetHIGT_COST()
 int Products::IgetINT_CATEG()
 {
 	return _int_categ;
+}
+
+int Products::IgetNUMBER()
+{
+	return _number;
 }
 
 deque<Products> Products::GetListProd()
@@ -107,11 +118,21 @@ deque<Products> Products::GetListProd(int loc)
 	deque<Products> Prod;
 	Products p;
 	ifstream in(path);	// окрываем файл для чтения
+	int number = 1;
+	int temp_cat = 0;
+	int temp_cat1 = 0;
 	if (in.is_open())
 	{
 		while (getline(in, line))
 		{
 			p = Purse(line);
+			p.IsetNUMBER(number);
+			number++;
+			if (p.IgetINT_CATEG() != temp_cat)
+			{
+				temp_cat = p.IgetINT_CATEG();
+				number = 1;
+			}
 			Prod.push_back(p);
 		}
 	}
@@ -256,6 +277,22 @@ void Products::RestoreFile()
 		AddItemToFile(p.IgetINT_CATEG(), p.IgetNAME(), p.IgetLOW_COST(), p.IgetHIGT_COST());
 	}
 
+}
+
+deque<Products> Products::FindCategory(int cat)
+{
+	deque <Products> Prod = {};
+	deque <Products> P = {};
+	P = GetListProd();
+	for (Products p1 : P)
+	{
+		if (p1.IgetINT_CATEG() == cat)
+		{
+			Prod.push_back(p1);
+		}
+	}
+
+	return Prod;
 }
 
 Products Products::Purse(string line)

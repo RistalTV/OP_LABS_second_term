@@ -18,4 +18,5 @@ class GUI
 		
 };
 
-void config_Console();
+int findCat(void);
+void config_Console(void);

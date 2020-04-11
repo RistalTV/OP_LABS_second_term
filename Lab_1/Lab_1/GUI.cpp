@@ -1,5 +1,6 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 
+#include <stdio.h>
 #include <iostream>
 #include "GUI.h"
 #include <windows.h>
@@ -14,7 +15,7 @@
 using namespace std;
 
 /// Глобальные переменные
-int pos_x   =    0;
+int pos_x =    0;
 int pos_y   =    0;
 
 
@@ -30,7 +31,8 @@ struct cat
 /// Перечисления
 enum levels
 {
-    load = 0,
+    money_load = -1,
+    load,
     users_selection_menu,
     user_selection_category_menu,
     user_selection_product_menu,
@@ -67,8 +69,10 @@ enum Keys
 enum locations
 {
     give_money=-1,
-    users=0,
+    loader,
+    users,
     us_category,
+    us_products,
     us_product,
     adm_cats
 };
@@ -103,25 +107,36 @@ void GUI::Iset_money(int cost)
 
 /// Простые перемещения по меню
 
-void UP(void)
+void UP(int param)
 {
+
     if (pos_y > 1)
         pos_y--;
 }
-void DOWN(void)
+void DOWN(int param)
 {
-    if (pos_y < 20)
-        pos_y++;
+    if (param == user_selection_product_menu)
+    {
+        if (pos_y < 100)
+            pos_y++;
+
+    }
+    else
+        if (pos_y < 20)
+            pos_y++;
 }
-void LEFT(void)
+void LEFT(int param)
 {
-    if (pos_x == 1)
-        pos_x--;
+    if(param != user_selection_product_menu)
+        if (pos_x == 1)
+            pos_x--;
 }
-void RIGTH(void)
+void RIGTH(int param)
 {
-    if (pos_x == 0)
-        pos_x++;
+    if (param != user_selection_product_menu)
+
+        if (pos_x == 0)
+            pos_x++;
 }
 
 
@@ -134,10 +149,11 @@ bool GUI::Manager_key(int param)
         Logo();
         switch (param)
         {
-        case 0: {Print_selection_users(-1); break; }
-        case 1: {Print_selection_users(0); break; }
-        case 2: {Print_selection_users(1); break; }
-        case 3: {Print_selection_users(2); break; }
+        case money_load: {Print_selection_users(give_money); break; }
+        case load: {Print_selection_users(loader); break; }
+        case users_selection_menu: {Print_selection_users(users); break; }
+        case user_selection_category_menu: {Print_selection_users(us_category); break; }
+        case user_selection_product_menu: {Print_selection_users(us_products); break; }
         }
         
         key = getch();
@@ -145,62 +161,62 @@ bool GUI::Manager_key(int param)
         {
             case ArrowUp:
             {
-                UP();
+                UP(param);
                 break;
             }
             case ArrowDown:
             {
-                DOWN();
+                DOWN(param);
                 break;
             }
             case ArrowLeft:
             {
-                LEFT();
+                LEFT(param);
                 break;
             }
             case ArrowRight:
             {
-                RIGTH();
+                RIGTH(param);
                 break;
             }
             case Key_W:
             {
-                UP();
+                UP(param);
                 break;
             }
             case Key_w:
             {
-                UP();
+                UP(param);
                 break;
             }
             case Key_S:
             {
-                DOWN();
+                DOWN(param);
                 break;
             }
             case Key_s:
             {
-                DOWN();
+                DOWN(param);
                 break;
             }
             case Key_D:
             {
-                RIGTH();
+                RIGTH(param);
                 break;
             }
             case Key_d:
             {
-                RIGTH();
+                RIGTH(param);
                 break;
             }
             case Key_A:
             {
-                LEFT();
+                LEFT(param);
                 break;
             }
             case Key_a:
             {
-                LEFT();
+                LEFT(param);
                 break;
             }
             case Enter:
@@ -218,6 +234,10 @@ bool GUI::Manager_key(int param)
                     pos_x = 0;
                     pos_y = 1;
                 }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 1;
+                }
                 break;
             }
             case Key_2:
@@ -229,6 +249,10 @@ bool GUI::Manager_key(int param)
                 if (param == 2)
                 {
                     pos_x = 0;
+                    pos_y = 2;
+                }
+                if (param == user_selection_product_menu)
+                {
                     pos_y = 2;
                 }
                 break;
@@ -244,6 +268,10 @@ bool GUI::Manager_key(int param)
                     pos_x = 0;
                     pos_y = 3;
                 }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 3;
+                }
                 break;
             }
             case Key_4:
@@ -255,6 +283,10 @@ bool GUI::Manager_key(int param)
                 if (param == 2)
                 {
                     pos_x = 0;
+                    pos_y = 4;
+                }
+                if (param == user_selection_product_menu)
+                {
                     pos_y = 4;
                 }
                 break;
@@ -270,6 +302,10 @@ bool GUI::Manager_key(int param)
                     pos_x = 0;
                     pos_y = 5;
                 }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 5;
+                }
                 break;
             }
             case Key_6:
@@ -283,6 +319,10 @@ bool GUI::Manager_key(int param)
                     pos_x = 1;
                     pos_y = 1;
                 }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 6;
+                }
                 break;
             }
             case Key_7:
@@ -291,6 +331,10 @@ bool GUI::Manager_key(int param)
                 {
                     pos_x = 1;
                     pos_y = 2;
+                }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 7;
                 }
                 break;
             }
@@ -301,6 +345,10 @@ bool GUI::Manager_key(int param)
                     pos_x = 1;
                     pos_y = 3;
                 }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 8;
+                }
                 break;
             }
             case Key_9:
@@ -309,6 +357,10 @@ bool GUI::Manager_key(int param)
                 {
                     pos_x = 1;
                     pos_y = 4;
+                }
+                if (param == user_selection_product_menu)
+                {
+                    pos_y = 9;
                 }
                 break;
             }
@@ -321,40 +373,45 @@ void GUI::Print_Menu(int lvl)
 {
     switch (lvl)
     {
-        case load:
+        case load://0
             {
-                Start_Logo();
                 bool exit = 0;
-                do { exit = Manager_key(0); } while (!exit);
+                do { exit = Manager_key(load); } while (!exit);//0
                 
-                Print_Menu(1);
+                Print_Menu(users_selection_menu);//1
                 break;
             }
-        case users_selection_menu:
+        case users_selection_menu: //1
             {
                 bool exit = 0;
-                do { exit=Manager_key(1); } while (!exit);
+                do { exit=Manager_key(users_selection_menu); } while (!exit);//1
                 if (pos_x == 0)
-                    Print_Menu(user_selection_category_menu);
+                    Print_Menu(user_selection_category_menu);//2
                 else
-                    Print_Menu(admin_selection_category_menu);
+                    Print_Menu(admin_selection_category_menu);//
                 break;
             }
-        case user_selection_category_menu:
+        case user_selection_category_menu://2
             {
                 bool exit = 0;
 
-                do { exit = Manager_key(2); } while (!exit);
+                do { exit = Manager_key(user_selection_category_menu); } while (!exit);//2
+                Print_Menu(user_selection_product_menu);//3
                 break;
-    }
-        case user_selection_product_menu:
+            }
+        case user_selection_product_menu://3
             {
-        break;
-    }
+            bool exit = 0;
+
+            do { exit = Manager_key(user_selection_product_menu); } while (!exit);//3
+//            Print_Menu(user_selection_product_menu); //3
+
+                break;
+            }
         case admin_selection_category_menu:
             {
-        break;
-    }
+                break;
+            }
 
     }
 }
@@ -389,6 +446,11 @@ void GUI::Print_selection_users(int location)
                 << "======================================================================================================================\n";
         }
         break;
+    case loader:
+        {
+            Start_Logo();
+            break;
+        }
     case users:
         {
         cout << "\n\n======================================================================================================================="
@@ -446,33 +508,63 @@ void GUI::Print_selection_users(int location)
             }
             /// вывод на экран список категорий
             {
-                cout << "    " << C[0].txt << "    "; if (C[0].flag == true) { cout << "[@] "; }
-                else { cout << "[ ]"; cout << "    "; }
-                cout << "             " << C[5].txt << "    "; if (C[5].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "\n"; }
-                cout << "    " << C[1].txt << "    "; if (C[1].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "    "; }
-                cout << "                " << C[6].txt << "    "; if (C[6].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "\n"; }
-                cout << "    " << C[2].txt << "    "; if (C[2].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "    "; }
-                cout << "            " << C[7].txt << "    "; if (C[7].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "\n"; }
-                cout << "    " << C[3].txt << "    "; if (C[3].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "    "; }
-                cout << "            " << C[8].txt << "    "; if (C[8].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "\n"; }
-                cout << "    " << C[4].txt << "    "; if (C[4].flag == true) { cout << "[@] "; }
-                else { cout << "[ ] "; cout << "    "; }
+                for (int i = 0; i < 5; i++)
+                {
+                    cout << "    " << C[i].txt << "    "; if (C[i].flag == true) { cout << "[@] "; }
+                    else { cout << "[ ]"; cout << "    "; }
+                    cout << "             " << C[i+5].txt << "    "; if (C[i+5].flag == true) { cout << "[@] "; }
+                    else { cout << "[ ] "; cout << "\n"; }
 
+                }
             }
             cout << "\n\n=======================================================================================================================";
         }
         break;
-    case us_product:
+    case us_products:
+    {
+        int cat = findCat();
+        Products P;
+        deque <Products> Prods = {};
+        Prods = P.FindCategory(cat);
+        cout 
+            << "\n\n\n                                             Выбрана <<"<<Prods.front().IgetCATEGORY()<<">> категория\n"
+            << "\n======================================================================================================================="
+            << "\n======================================================================================================================="
+            << "\n=   == №   == Название продукта                                                        == Цена == Маленькая == Большая =="
+            << "\n=======================================================================================================================";
+        for (Products P : Prods)
         {
+            char Name[70];
             
+            string str = P.IgetNAME();
+            for (int i = 0; i < str.length(); i++)
+            {
+                Name[i] = str[i];
+            }
+            for (int i = str.length(); i < 70; i++)
+            {
+                Name[i] = '\0';
+            }
+            if (pos_y == P.IgetNUMBER())
+            {
+                if (P.IgetHIGT_COST() == 0)
+                    printf("\n=[X]== %-3d == %-83s == %-4d руб. ==", P.IgetNUMBER(), Name, P.IgetLOW_COST());
+                else
+                    printf("\n=[X]== %-3d == %-70s == %-4d руб. == %-4d руб. ==", P.IgetNUMBER(), Name, P.IgetLOW_COST(), P.IgetHIGT_COST());
+
+            }
+            else
+            {
+                if (P.IgetHIGT_COST() == 0)
+                    printf("\n=[ ]== %-3d == %-83s == %-4d руб. ==", P.IgetNUMBER(), Name, P.IgetLOW_COST());
+                else
+                    printf("\n=[ ]== %-3d == %-70s == %-4d руб. == %-4d руб. ==", P.IgetNUMBER(), Name, P.IgetLOW_COST(), P.IgetHIGT_COST());
+
+            }
         }
+    
+        
+    }
         break;
     case adm_cats:
         {
@@ -489,9 +581,10 @@ void GUI::Print_selection_users(int location)
 
 bool GUI::Start_App()
 {
-    Products p;
-    p.RestoreFile();
-//    Print_Menu(0);
+    //int i = findCat();
+    //Products p;
+    //p.RestoreFile();
+    Print_Menu(0);
     return 0;
 };
 
@@ -532,7 +625,73 @@ void config_Console()
 
 };
 
-
+int findCat()
+{
+    switch (pos_x)
+    {   case 0:
+        {
+            switch (pos_y)
+            {
+                case 1:
+                {
+                    return 1;
+                    break;
+                }
+                case 2:
+                {
+                    return 2;
+                    break;
+                }
+                case 3:
+                {
+                    return 3;
+                    break;
+                }
+                case 4:
+                {
+                    return 4;
+                    break;
+                }
+                case 5:
+                {
+                    return 5;
+                    break;
+                }
+                default: return 0; break;
+            }
+            break;
+        }
+        case 1:
+        {
+            switch (pos_y)
+            {
+                case 1:
+                {
+                    return 6;
+                    break;
+                }
+                case 2:
+                {
+                    return 7;
+                    break;
+                }
+                case 3:
+                {
+                    return 8;
+                    break;
+                }
+                case 4:
+                {
+                    return 9;
+                    break;
+                }
+                default: return 0; break;
+            }
+            break;
+        }
+        default: return 0; break;
+    }
+}
 
 
 
